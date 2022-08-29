@@ -21,9 +21,15 @@
  
 # Usage
  
+## Image Download
+
+学習用に使用する画像のデータセットは以下でダウンロードする
  
 ```bash
+python ./download.py (keyword)
 ```
+
+今回は(keyword)にcar/motorbikeを使用
  
 # Note
  
