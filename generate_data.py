@@ -21,7 +21,8 @@ for index , classlabel in enumerate(classes):
     image = image.convert("RGB") #RGBに統一
     image = image.resize((image_size,image_size))
 
-    data = np.asarray(image) #np配列化
+    data = np.asarray(image).astype('float') #np配列化
+    data /= 255.0 #正規化
     # リストへ追加
     X.append(data)
     Y.append(index)
