@@ -33,4 +33,4 @@ Y = np.array(Y)
 X_train, X_test, y_train, y_test = model_selection.train_test_split(X,Y)
 xy = (X_train ,X_test , y_train, y_test)
 
-np.save("./data/imagedilws.npy",xy)
+np.save("./data/imagefiles.npy",xy)
