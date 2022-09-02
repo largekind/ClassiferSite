@@ -5,6 +5,7 @@ from torch import torch, nn , optim , cuda
 from model import ClassiferCNN
 from dataset import ClassDataset
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 def main():
   classes = ["car","motorbike"]
@@ -36,13 +37,12 @@ def main():
   train_acc_list = []
   val_loss_list = []
   val_acc_list = []
-  train_loss = 0
-  train_acc = 0
-  val_loss = 0
-  val_acc = 0
-
   for epoch in range(epochs):
     print("Epoch: {}".format(epoch+1))
+    train_loss = 0
+    train_acc = 0
+    val_loss = 0
+    val_acc = 0
 
     model.train() #学習モードセット
     for i , (images, labels) in enumerate(tqdm(train_loader)):
