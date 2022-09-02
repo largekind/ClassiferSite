@@ -45,7 +45,7 @@ def main():
     print("Epoch: {}".format(epoch+1))
 
     model.train() #学習モードセット
-    for i , (images, labels) in enumerate(train_loader):
+    for i , (images, labels) in enumerate(tqdm(train_loader)):
       images = images.to(device)
       labels = labels.to(device)
       optimizer.zero_grad() #勾配初期化
