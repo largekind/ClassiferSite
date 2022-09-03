@@ -6,7 +6,7 @@ from sklearn import model_selection
 #パラメータ初期化
 classes = ["car","motorbike"]
 num_classes = len(classes)
-image_size = 150
+image_size = 224
 
 #画像のnumpy配列
 X = []
@@ -22,7 +22,6 @@ for index , classlabel in enumerate(classes):
     image = image.resize((image_size,image_size))
 
     data = np.asarray(image).astype('float') #np配列化
-    data /= 255.0 #正規化
     # リストへ追加
     X.append(data)
     Y.append(index)

@@ -6,6 +6,8 @@ from model import ClassiferCNN
 from dataset import ClassDataset
 from torch.utils.data import DataLoader
 from tqdm import tqdm
+from torchvision import transforms , models
+from torchinfo import summary
 
 def main():
   classes = ["car","motorbike"]
@@ -13,11 +15,15 @@ def main():
   image_size = 150
   batch_size = 8
   epochs = 10
+  transform = transforms.Compose([
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225]),
+  ])
 
   #npyから各データセットを作成
   X_train, X_test, y_train, y_test = np.load("./data/imagefiles.npy",allow_pickle=True)
-  dataset_train = ClassDataset(X_train,y_train)
-  dataset_test = ClassDataset(X_test,y_test)
+  dataset_train = ClassDataset(X_train,y_train,transform)
+  dataset_test = ClassDataset(X_test,y_test,transform)
 
   train_loader = DataLoader(dataset_train, batch_size=batch_size, shuffle=True,num_workers=2)
   test_loader  = DataLoader(dataset_test, batch_size=batch_size, shuffle=True,num_workers=2)
@@ -26,12 +32,28 @@ def main():
   print("Use of",device)
 
   #モデル定義
-  model = ClassiferCNN().double().to(device)
-
+  model = models.efficientnet_b7(pretrained=True).to(device)
+  #転移学習用に値を固定
+  for param in model.features.parameters():
+    param.requires_grad = False
+  # 分類部分の構造を再作成
+  model.classifier = torch.nn.Sequential(
+                            torch.nn.Dropout(p=0.2, inplace=True),
+                            torch.nn.Linear(in_features=2560,
+                            out_features=2,
+                            bias=True)
+                            ).to(device)
+  # モデルの表示
+  print(summary(model,
+        input_size=(32, 3, 224, 224),
+        verbose=0,
+        col_names=["input_size", "output_size", "num_params", "trainable"],
+        col_width=20,
+        row_settings=["var_names"]
+  ))
   # optimizer/criterion
   optimizer = optim.Adam(model.parameters(),lr=0.1)
   criterion = nn.CrossEntropyLoss().to(device)
-
   # 学習
   train_loss_list = []
   train_acc_list = []
