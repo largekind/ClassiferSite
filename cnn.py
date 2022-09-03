@@ -29,7 +29,7 @@ def main():
   model = ClassiferCNN().double().to(device)
 
   # optimizer/criterion
-  optimizer = optim.SGD(model.parameters(),lr=0.1)
+  optimizer = optim.Adam(model.parameters(),lr=0.1)
   criterion = nn.CrossEntropyLoss().to(device)
 
   # 学習
