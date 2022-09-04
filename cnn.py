@@ -7,6 +7,7 @@ from dataset import ClassDataset
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from torchvision import transforms , models
+from torchvision.datasets import ImageFolder
 from torchinfo import summary
 
 def main():
@@ -14,17 +15,25 @@ def main():
   num_classes = len(classes)
   image_size = 150
   batch_size = 8
-  epochs = 10
+  epochs = 20
   transform = transforms.Compose([
+    transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406],
                          std=[0.229, 0.224, 0.225]),
   ])
 
   #npyから各データセットを作成
-  X_train, X_test, y_train, y_test = np.load("./data/imagefiles.npy",allow_pickle=True)
-  dataset_train = ClassDataset(X_train,y_train,transform)
-  dataset_test = ClassDataset(X_test,y_test,transform)
-
+  #X_train, X_test, y_train, y_test = np.load("./data/imagefiles.npy",allow_pickle=True)
+  images = ImageFolder( "./data", transform = transform)
+  #dataset_train = ClassDataset(X_train,y_train,transform)
+  #dataset_test = ClassDataset(X_test,y_test,transform)
+  # 学習データ、検証データに 8:2 の割合で分割する。
+  train_size = int(0.8 * len(images))
+  val_size = len(images) - train_size
+  dataset_train, dataset_test = torch.utils.data.random_split(
+      images, [train_size, val_size]
+  )
+  # データローダの設定
   train_loader = DataLoader(dataset_train, batch_size=batch_size, shuffle=True,num_workers=2)
   test_loader  = DataLoader(dataset_test, batch_size=batch_size, shuffle=True,num_workers=2)
   # GPUの確認
