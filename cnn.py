@@ -104,6 +104,9 @@ def main():
     train_acc_list.append(avg_train_acc)
     val_loss_list.append(avg_val_loss)
     val_acc_list.append(avg_val_acc)
+  #モデル保存
+  model_path = 'model.pth'
+  torch.save(model.state_dict(), model_path)
 
 # 1 hot vecをクラスで分割する np_utils.to_categorialのpytorch版処理
 def to_categorical(y, num_classes):
