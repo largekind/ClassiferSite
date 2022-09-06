@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+import carbike.views as carbike
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('carbike/', carbike.index),
 ]
