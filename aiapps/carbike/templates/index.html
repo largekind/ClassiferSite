@@ -1,0 +1,21 @@
+{% extends 'carbike/base.html' %}
+{% block title%}車・バイク判定アプリメニュー{% endblock %}
+
+{% block content %}
+<div>
+  <h4 class="mt-4 mb-5 border-bottom">車バイク推定<h4>
+  <p>画像ファイルを選択して、推定ボタンクリック</p>
+  <form action="{%url "carbike:predict" %}" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <div class="custom-file">
+      {{form.image}}
+      <label class="custom-file-label" for="customFile">
+        推定したいファイルを選択
+      </label>
+    </div>
+  </div>
+  <bottom type="submit" class="btn btn-primary">推定</buttom>
+  </form>
+</div>
+{% endblock %}
