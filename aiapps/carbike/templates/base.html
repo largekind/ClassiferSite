@@ -1,0 +1,20 @@
+<!DOCTYPE html> <html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'carbike/css/style.css %}">
+    {% bootstrap_javascript jquery='full' %}
+    <title>車・バイク判定 | {% block title %} {% endblock %}</title>
+  </head>
+
+  <body>
+
+    <nav class="narvar narvar-expand-lg narver-light bg-light">
+      <a class="narvar-brand" href="#">画像判定アプリ</a>
+    </nav>
+    <div class = "container">
+      {% blcok content %}{% endblock %}
+    </div>
+  </body>
+</html>
