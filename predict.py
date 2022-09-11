@@ -1,6 +1,6 @@
 from torchvision import transforms , models
 from torchinfo import summary
-from torch import torch, cuda
+from torch import torch, cuda , nn
 import sys
 from PIL import Image
 import numpy as np
@@ -36,6 +36,6 @@ print(data.shape)
 
 # 予測
 with torch.no_grad():
-  outputs = model(data)
+  outputs = nn.Softmax(dim=1)(model(data))
   pred = classes[torch.argmax(outputs)]
   print(pred," ",outputs)
