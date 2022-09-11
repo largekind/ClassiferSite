@@ -2,10 +2,10 @@
   <head>
     <meta charset="UTF-8">
     {% load static %}
-    {% load bootstrap5 %}
+    {% load django_bootstrap5 %}
     {% bootstrap_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'carbike/css/style.css' %}">
-    {% bootstrap_javascript jquery='full' %}
+    {% bootstrap_javascript %}
     <title>車・バイク判定 | {% block title %} {% endblock %}</title>
   </head>
 
@@ -15,7 +15,7 @@
       <a class="narvar-brand" href="#">画像判定アプリ</a>
     </nav>
     <div class = "container">
-      {% blcok content %}{% endblock %}
+      {% block content %}{% endblock %}
     </div>
   </body>
 </html>
