@@ -2,6 +2,7 @@ from multiprocessing import context
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from django.template import loader
+from torch import torch
 from .forms import PhotoForm
 from .models import Photo
 
@@ -20,5 +21,14 @@ def predict(request):
     raise ValueError('Formが無効です')
 
   photo = Photo(image = form.cleaned_data['image'])
-  photo.predict()
-  return HttpResponse("")
+  predicted, percent = photo.predict()
+
+  template = loader.get_template('carbike/result.html')
+  print(template)
+
+  context = {
+    'predicted' : predicted,
+    'percentage' : torch.max(percent).item() * 100
+  }
+  #print(template.render(context, request))
+  return HttpResponse(template.render(context, request))

@@ -61,3 +61,5 @@ class Photo(models.Model):
       outputs = nn.Softmax(dim=1)(model(data))
       pred = self.classes[torch.argmax(outputs)]
       print(pred," ",outputs)
+
+      return pred, outputs
