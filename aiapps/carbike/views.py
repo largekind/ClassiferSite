@@ -27,6 +27,7 @@ def predict(request):
   print(template)
 
   context = {
+    'photoname' : photo.image.name,
     'predicted' : predicted,
     'percentage' : torch.max(percent).item() * 100
   }
