@@ -7,10 +7,15 @@
 
   <table class='table'>
     <tbody>
-       <tr>
+      <tr>
         <td>ファイル名</td>
         <td>{{ photoname }} </td>
       </tr>
+      <tr>
+        <td>画像データ</td>
+        <td><img class='preview-img' src={{ photodata }}></img></td>
+      </tr>
+
       <tr>
         <td>推定ラベル</td>
         <td>{{ predicted }} </td>

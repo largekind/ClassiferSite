@@ -1,8 +1,7 @@
 from django.db import models
 from torch import torch, cuda , nn
 from PIL import Image
-import glob
-import io
+import io , base64
 
 class Photo(models.Model):
   image = models.ImageField(upload_to='photos')
@@ -63,3 +62,9 @@ class Photo(models.Model):
       print(pred," ",outputs)
 
       return pred, outputs
+  def image_src(self):
+    with self.image.open() as img:
+      #画像をBase64の文字列へ変更
+      base64_img = base64.b64encode(img.read()).decode()
+
+      return 'data:' + img.file.content_type +';base64,' + base64_img
